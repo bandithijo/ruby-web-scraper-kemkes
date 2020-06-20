@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'byebug'
 require 'active_record'
 require_relative './models/covid_kemkes_pasien'
+require_relative './helpers/color_helper'
 require 'date'
 
 def db_configuration
@@ -44,13 +45,14 @@ def scraper
     if (data_input.fetched_at.localtime.to_date != CovidKemkesPasien.all.last.fetched_at.localtime.to_date) &&
            (data_input.positif_covid != CovidKemkesPasien.all.last.positif_covid)
       data_input.save
-      puts "INFO: Data berhasil diinputkan ke dalam database!"
+      puts "INFO: Data berhasil diinputkan ke dalam database!".bold.bold.bg_brown
+      puts "Total Pasien Positif (REMOTE): "+"#{data_input.positif_covid}".bold+"\nTotal Pasien Positif (LOCAL) : "+"#{CovidKemkesPasien.all.last.positif_covid}".bold+"\nTotal Pasien Positif Baru    : "+"#{data_input.positif_covid - CovidKemkesPasien.all.last.positif_covid}".bold
     else
-      puts "INFO: Belum ada data baru untuk hari ini!"
-      puts "Total Pasien Positif (REMOTE): #{data_input.positif_covid} (#{data_input.fetched_at.localtime.to_date})\nTotal Pasien Positif (LOCAL) : #{CovidKemkesPasien.all.last.positif_covid} (#{CovidKemkesPasien.all.last.fetched_at.localtime.to_date})"
+      puts "INFO: Belum ada data baru untuk hari ini!".bold.black.bg_brown
+      puts "Total Pasien Positif (REMOTE): "+"#{data_input.positif_covid}".bold+" (#{data_input.fetched_at.localtime.to_date})\nTotal Pasien Positif (LOCAL) : "+"#{CovidKemkesPasien.all.last.positif_covid}".bold+" (#{CovidKemkesPasien.all.last.fetched_at.localtime.to_date})"
     end
   else
-    puts "INFO: Data tidak valid!"
+    puts "INFO: Data tidak valid!".bold.black.bg_red
     puts data_input.errors.messages
   end
 end
