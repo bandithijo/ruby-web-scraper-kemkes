@@ -24,9 +24,4 @@ ActiveRecord::Schema.define(version: 2020_06_19_103845) do
     t.datetime "fetched_at"
   end
 
-  create_table "daftar_dosens", force: :cascade do |t|
-    t.string "nama_dosen", null: false
-    t.string "nidn_dosen"
-  end
-
 end
