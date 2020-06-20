@@ -33,14 +33,15 @@ def scraper
     jumlah_pdp:      data[:jumlah_pdp],
     fetched_at:      DateTime.now
   )
-  byebug
+  # byebug
 
   if data_input.valid?
-    unless data_input.created_at.to_date == CovidKemkesPasien.all.last.created_at.to_date
+    unless (data_input.fetched_at.localtime.to_date == CovidKemkesPasien.all.last.fetched_at.localtime.to_date) &&
+           (data_input.positif_covid == CovidKemkesPasien.all.last.positif_covid)
       data_input.save
       puts "INFO: Data berhasil diinputkan ke dalam database!"
     else
-      puts "INFO: Tidak ada data baru untuk hari ini!"
+      puts "INFO: Belum ada data baru untuk hari ini!"
     end
   else
     puts "INFO: Data tidak valid!"
