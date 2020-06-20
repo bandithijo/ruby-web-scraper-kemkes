@@ -13,17 +13,22 @@ end
 ActiveRecord::Base.establish_connection(db_configuration['development'])
 
 def scraper
-  target_url     = "https://kemkes.go.id/"
-  unparsed_page  = HTTParty.get(target_url)
-  parsed_page    = Nokogiri::HTML(unparsed_page)
+  begin
+    target_url     = "https://kemkes.go.id/"
+    unparsed_page  = HTTParty.get(target_url)
+    parsed_page    = Nokogiri::HTML(unparsed_page)
 
-  data = {
-    positif_covid:   parsed_page.css("td")[2].text.gsub(".", "").to_i,
-    sembuh_covid:    parsed_page.css("td")[5].text.gsub(".", "").to_i,
-    meninggal_covid: parsed_page.css("td")[8].text.gsub(".", "").to_i,
-    jumlah_odp:      parsed_page.css("td")[11].text.gsub(".", "").to_i,
-    jumlah_pdp:      parsed_page.css("td")[14].text.gsub(".", "").to_i,
-  }
+    data = {
+      positif_covid:   parsed_page.css("td")[2].text.gsub(".", "").to_i,
+      sembuh_covid:    parsed_page.css("td")[5].text.gsub(".", "").to_i,
+      meninggal_covid: parsed_page.css("td")[8].text.gsub(".", "").to_i,
+      jumlah_odp:      parsed_page.css("td")[11].text.gsub(".", "").to_i,
+      jumlah_pdp:      parsed_page.css("td")[14].text.gsub(".", "").to_i,
+    }
+  rescue Exception => e
+    puts "ERROR: #{e.message}"
+    exit
+  end
 
   data_input = CovidKemkesPasien.new(
     positif_covid:   data[:positif_covid],
