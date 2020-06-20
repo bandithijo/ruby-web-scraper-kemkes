@@ -36,7 +36,7 @@ def scraper
     meninggal_covid: data[:meninggal_covid],
     jumlah_odp:      data[:jumlah_odp],
     jumlah_pdp:      data[:jumlah_pdp],
-    fetched_at:      DateTime.now
+    fetched_at:      DateTime.now.localtime
   )
   # byebug
 
