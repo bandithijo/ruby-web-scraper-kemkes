@@ -41,12 +41,13 @@ def scraper
   # byebug
 
   if data_input.valid?
-    unless (data_input.fetched_at.localtime.to_date == CovidKemkesPasien.all.last.fetched_at.localtime.to_date) &&
-           (data_input.positif_covid == CovidKemkesPasien.all.last.positif_covid)
+    if (data_input.fetched_at.localtime.to_date != CovidKemkesPasien.all.last.fetched_at.localtime.to_date) &&
+           (data_input.positif_covid != CovidKemkesPasien.all.last.positif_covid)
       data_input.save
       puts "INFO: Data berhasil diinputkan ke dalam database!"
     else
       puts "INFO: Belum ada data baru untuk hari ini!"
+      puts "Total Pasien Positif (REMOTE): #{data_input.positif_covid} (#{data_input.fetched_at.localtime.to_date})\nTotal Pasien Positif (LOCAL) : #{CovidKemkesPasien.all.last.positif_covid} (#{CovidKemkesPasien.all.last.fetched_at.localtime.to_date})"
     end
   else
     puts "INFO: Data tidak valid!"
