@@ -39,22 +39,24 @@ def scraper
     jumlah_pdp:      data[:jumlah_pdp],
     fetched_at:      DateTime.now.localtime
   )
+
+  data_local = CovidKemkesPasien.all.last
   # byebug
 
   if data_input.valid?
-    if (data_input.fetched_at.localtime.to_date != CovidKemkesPasien.all.last.fetched_at.localtime.to_date) &&
-           (data_input.positif_covid != CovidKemkesPasien.all.last.positif_covid)
+    if (data_input.fetched_at.localtime.to_date != data_local.fetched_at.localtime.to_date) &&
+           (data_input.positif_covid != data_local.positif_covid)
       data_input.save
-      puts "INFO: Data berhasil diinputkan ke dalam database!".bold.bold.bg_brown
+      puts "INFO: Data berhasil diinputkan ke dalam database!".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold
-      puts "Total Pasien Positif (LOCAL) : " + "#{CovidKemkesPasien.all.last.positif_covid}".bold
-      puts "Total Pasien Positif Baru    : " + "#{data_input.positif_covid - CovidKemkesPasien.all.last.positif_covid}".bold
+      puts "Total Pasien Positif (LOCAL) : " + "#{data_local.positif_covid}".bold
+      puts "Total Pasien Positif Baru    : " + "#{data_input.positif_covid - data_local.positif_covid}".bold
     else
       puts "INFO: Belum ada data baru untuk hari ini!".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold \
                                              + " (#{data_input.fetched_at.localtime.to_date})"
-      puts "Total Pasien Positif (LOCAL) : " + "#{CovidKemkesPasien.all.last.positif_covid}".bold \
-                                             + " (#{CovidKemkesPasien.all.last.fetched_at.localtime.to_date})"
+      puts "Total Pasien Positif (LOCAL) : " + "#{data_local.positif_covid}".bold \
+                                             + " (#{data_local.fetched_at.localtime.to_date})"
     end
   else
     puts "INFO: Data tidak valid!".bold.black.bg_red
