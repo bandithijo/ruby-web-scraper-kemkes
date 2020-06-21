@@ -22,4 +22,13 @@ CovidKemkesPasien.create(
   fetched_at: '2020-06-20 12:38:19.914417'
 )
 
+CovidKemkesPasien.create(
+  positif_covid: 45891,
+  sembuh_covid: 18404,
+  meninggal_covid: 2465,
+  jumlah_odp: 56436,
+  jumlah_pdp: 13225,
+  fetched_at: '2020-06-21 13:18:10.654619'
+)
+
 puts "Inserted seed to 'covid_kemkes_pasiens'"
