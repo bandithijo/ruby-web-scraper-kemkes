@@ -61,19 +61,33 @@ def scraper
       puts "INFO: DATA BERHASIL DIINPUTKAN KE DALAM DATABASE!".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold
       puts "Total Pasien Positif (LOCAL) : " + "#{data_local_last.positif_covid}".bold
-      puts "SELISIH DATA HARI INI & KEMARIN".bold
+      puts "PERKEMBANGAN DATA HARI INI & KEMARIN".bold
       puts "Total Pasien Positif Baru    : " + "#{data_new_positiv_covid}".bold
       puts "Total Pasien Sembuh Baru     : " + "#{data_new_sembuh_covid}".bold
       puts "Total Pasien Meninggal Baru  : " + "#{data_new_meninggal_covid}".bold
       puts "Total ODP                    : " + "#{data_new_jumlah_odp}".bold
       puts "Total PDP                    : " + "#{data_new_jumlah_pdp}".bold
+
+      seeds_file = File.join(File.expand_path('..', __FILE__), '..', 'db', 'seeds.rb')
+      File.open(seeds_file, "a") do |f|
+        f.puts "\ndata = CovidKemkesPasien.create("
+        f.puts "  positif_covid:   #{data_input.positif_covid},"
+        f.puts "  sembuh_covid:    #{data_input.sembuh_covid},"
+        f.puts "  meninggal_covid: #{data_input.meninggal_covid},"
+        f.puts "  jumlah_odp:      #{data_input.jumlah_odp},"
+        f.puts "  jumlah_pdp:      #{data_input.jumlah_pdp},"
+        f.puts "  fetched_at:      '#{data_input.fetched_at}'"
+        f.puts ")"
+        f.puts "puts \"Insert data => \#\{data.fetched_at.to_date\}\""
+        f.close
+      end
     else
       puts "INFO: BELUM ADA DATA BARU UNTUK HARI INI!".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold \
                                              + " (#{data_input.fetched_at.localtime.to_date})"
       puts "Total Pasien Positif (LOCAL) : " + "#{data_local_last.positif_covid}".bold \
                                              + " (#{data_local_last.fetched_at.localtime.to_date})"
-      puts "SELISIH DATA HARI INI & KEMARIN".bold
+      puts "PERKEMBANGAN DATA HARI INI & KEMARIN".bold
       puts "Total Pasien Positif Baru    : " + "#{data_old_positif_covid}".bold
       puts "Total Pasien Sembuh Baru     : " + "#{data_old_sembuh_covid}".bold
       puts "Total Pasien Meninggal Baru  : " + "#{data_old_meninggal_covid}".bold

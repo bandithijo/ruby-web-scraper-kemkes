@@ -1,34 +1,41 @@
-
-# INSERT INTO covid_kemkes_pasiens VALUES(1, 43803, 17349, 2373, 36464, 13211, '2020-06-19 23:24:34.251703');
-# INSERT INTO covid_kemkes_pasiens VALUES(2, 45029, 17883, 2429, 37336, 13150, '2020-06-20 12:38:19.914417');
-
 require_relative '../app/models/covid_kemkes_pasien'
 
-CovidKemkesPasien.create(
-  positif_covid: 43803,
-  sembuh_covid: 17349,
+data = CovidKemkesPasien.create(
+  positif_covid:   43803,
+  sembuh_covid:    17349,
   meninggal_covid: 2373,
-  jumlah_odp: 36464,
-  jumlah_pdp: 13211,
-  fetched_at: '2020-06-19 23:24:34.251703'
+  jumlah_odp:      36464,
+  jumlah_pdp:      13211,
+  fetched_at:      '2020-06-19 23:24:34.251703'
 )
+puts "Insert data => #{data.fetched_at.to_date}"
 
-CovidKemkesPasien.create(
-  positif_covid: 45029,
-  sembuh_covid: 17883,
+data = CovidKemkesPasien.create(
+  positif_covid:   45029,
+  sembuh_covid:    17883,
   meninggal_covid: 2429,
-  jumlah_odp: 37336,
-  jumlah_pdp: 13150,
-  fetched_at: '2020-06-20 12:38:19.914417'
+  jumlah_odp:      37336,
+  jumlah_pdp:      13150,
+  fetched_at:      '2020-06-20 12:38:19.914417'
 )
+puts "Insert data => #{data.fetched_at.to_date}"
 
-CovidKemkesPasien.create(
-  positif_covid: 45891,
-  sembuh_covid: 18404,
+data = CovidKemkesPasien.create(
+  positif_covid:   45891,
+  sembuh_covid:    18404,
   meninggal_covid: 2465,
-  jumlah_odp: 56436,
-  jumlah_pdp: 13225,
-  fetched_at: '2020-06-21 13:18:10.654619'
+  jumlah_odp:      56436,
+  jumlah_pdp:      13225,
+  fetched_at:      '2020-06-21 13:18:10.654619'
 )
+puts "Insert data => #{data.fetched_at.to_date}"
 
-puts "Inserted seed to 'covid_kemkes_pasiens'"
+data = CovidKemkesPasien.create(
+  positif_covid:   46845,
+  sembuh_covid:    18735,
+  meninggal_covid: 2500,
+  jumlah_odp:      43500,
+  jumlah_pdp:      12999,
+  fetched_at:      '2020-06-22 13:31:35.996863'
+)
+puts "Insert data => #{data.fetched_at.to_date}"
