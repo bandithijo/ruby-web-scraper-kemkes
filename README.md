@@ -25,7 +25,7 @@ $ rake db:seed
 ## Memparsing Data
 
 ```shell
-$ rake start
+$ rake run
 ```
 
 ## Mereset Data Tabel
