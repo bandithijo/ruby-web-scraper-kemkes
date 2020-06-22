@@ -6,7 +6,7 @@ data = CovidKemkesPasien.create(
   meninggal_covid: 2373,
   jumlah_odp:      36464,
   jumlah_pdp:      13211,
-  fetched_at:      '2020-06-19 23:24:34.251703'
+  fetched_at:      '2020-06-19 23:24:34 UTC'
 )
 puts "Insert data => #{data.fetched_at.to_date}"
 
@@ -16,7 +16,7 @@ data = CovidKemkesPasien.create(
   meninggal_covid: 2429,
   jumlah_odp:      37336,
   jumlah_pdp:      13150,
-  fetched_at:      '2020-06-20 12:38:19.914417'
+  fetched_at:      '2020-06-20 12:38:19 UTC'
 )
 puts "Insert data => #{data.fetched_at.to_date}"
 
@@ -26,7 +26,7 @@ data = CovidKemkesPasien.create(
   meninggal_covid: 2465,
   jumlah_odp:      56436,
   jumlah_pdp:      13225,
-  fetched_at:      '2020-06-21 13:18:10.654619'
+  fetched_at:      '2020-06-21 13:18:10 UTC'
 )
 puts "Insert data => #{data.fetched_at.to_date}"
 
@@ -36,6 +36,6 @@ data = CovidKemkesPasien.create(
   meninggal_covid: 2500,
   jumlah_odp:      43500,
   jumlah_pdp:      12999,
-  fetched_at:      '2020-06-22 13:31:35.996863'
+  fetched_at:      '2020-06-22 13:31:35 UTC'
 )
 puts "Insert data => #{data.fetched_at.to_date}"
