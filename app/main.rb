@@ -61,7 +61,7 @@ def scraper
       puts "INFO: DATA BERHASIL DIINPUTKAN KE DALAM DATABASE!".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold
       puts "Total Pasien Positif (LOCAL) : " + "#{data_local_last.positif_covid}".bold
-      puts "DATA HARI INI".bold
+      puts "SELISIH DATA HARI INI & KEMARIN".bold
       puts "Total Pasien Positif Baru    : " + "#{data_new_positiv_covid}".bold
       puts "Total Pasien Sembuh Baru     : " + "#{data_new_sembuh_covid}".bold
       puts "Total Pasien Meninggal Baru  : " + "#{data_new_meninggal_covid}".bold
