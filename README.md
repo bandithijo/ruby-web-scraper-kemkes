@@ -1,6 +1,6 @@
 # Ruby Web Scraper (Studi Kasus: KemKes)
 
-Ruby script untuk memparsing data "**Situasi COVID-19**" pada website [KemKes](https://kemkes.go.id/).
+Ruby script untuk melakukan pencatatan data perhari berkenaan tentang "**Situasi COVID-19**" pada website [KemKes](https://kemkes.go.id/).
 
 ## Prerequisite
 
