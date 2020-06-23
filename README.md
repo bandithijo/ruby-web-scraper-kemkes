@@ -19,10 +19,9 @@ Ruby script untuk melakukan pencatatan data perhari berkenaan tentang "**Situasi
 ```shell
 $ rake db:create
 $ rake db:migrate
-$ rake db:seed
 ```
 
-## Memparsing Data
+## Menjalankan Script
 
 ```shell
 $ rake run
