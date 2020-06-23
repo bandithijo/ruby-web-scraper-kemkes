@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_06_19_103845) do
     t.integer "meninggal_covid"
     t.integer "jumlah_odp"
     t.integer "jumlah_pdp"
-    t.datetime "fetched_at"
+    t.date "fetched_at"
   end
 
 end

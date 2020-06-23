@@ -6,7 +6,7 @@ class CreateCovidKemkesPasiens < ActiveRecord::Migration[6.0]
       t.integer  :meninggal_covid
       t.integer  :jumlah_odp
       t.integer  :jumlah_pdp
-      t.datetime :fetched_at
+      t.date     :fetched_at
     end
   end
 end

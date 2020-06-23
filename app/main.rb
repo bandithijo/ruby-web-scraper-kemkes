@@ -5,6 +5,7 @@ require 'active_record'
 require_relative './models/covid_kemkes_pasien'
 require_relative './helpers/color_helper'
 require 'date'
+require 'rake'
 
 def db_configuration
   db_configuration_file = File.join(File.expand_path('..', __FILE__), '..', 'db', 'config.yml')
@@ -37,8 +38,20 @@ def scraper
     meninggal_covid: data[:meninggal_covid],
     jumlah_odp:      data[:jumlah_odp],
     jumlah_pdp:      data[:jumlah_pdp],
-    fetched_at:      DateTime.now.localtime
+    fetched_at:      Date.today
   )
+
+  if CovidKemkesPasien.all.size == 0
+    puts "PERHATIAN: Database Kosong.".bold.black.bg_brown
+    puts "Program akan menjalankan proses seeding.".bold.reverse_color
+    rake = Rake.application
+    rake.init
+    rake.load_rakefile
+    rake["db:seed"].invoke
+    puts "Seeding berhasil.".bold.black.bg_green
+    sleep 3
+    system "clear"
+  end
 
   data_local_last          = CovidKemkesPasien.all.last
   data_local_before_last   = CovidKemkesPasien.all[-2]
@@ -55,10 +68,10 @@ def scraper
   # byebug
 
   if data_input.valid?
-    if (data_input.fetched_at.localtime.to_date != data_local_last.fetched_at.localtime.to_date) &&
+    if (data_input.fetched_at != data_local_last.fetched_at) &&
            (data_input.positif_covid != data_local_last.positif_covid)
       data_input.save
-      puts "INFO: DATA BERHASIL DIINPUTKAN KE DALAM DATABASE!".bold.black.bg_brown
+      puts "INFO: DATA TERBARU BERHASIL DIINPUTKAN KE DALAM DATABASE!".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold
       puts "Total Pasien Positif (LOCAL) : " + "#{data_local_last.positif_covid}".bold
       puts "PERKEMBANGAN DATA HARI INI & KEMARIN".bold
@@ -78,15 +91,15 @@ def scraper
         f.puts "  jumlah_pdp:      #{data_input.jumlah_pdp},"
         f.puts "  fetched_at:      '#{data_input.fetched_at}'"
         f.puts ")"
-        f.puts "puts \"Insert data => \#\{data.fetched_at.to_date\}\""
+        f.puts "puts \"Insert data => \#\{data.fetched_at\}\""
         f.close
       end
     else
       puts "INFO: BELUM ADA DATA BARU UNTUK HARI INI!".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold \
-                                             + " (#{data_input.fetched_at.localtime.to_date})"
+                                             + " (#{data_input.fetched_at})"
       puts "Total Pasien Positif (LOCAL) : " + "#{data_local_last.positif_covid}".bold \
-                                             + " (#{data_local_last.fetched_at.localtime.to_date})"
+                                             + " (#{data_local_last.fetched_at})"
       puts "PERKEMBANGAN DATA HARI INI & KEMARIN".bold
       puts "Total Pasien Positif Baru    : " + "#{data_old_positif_covid}".bold
       puts "Total Pasien Sembuh Baru     : " + "#{data_old_sembuh_covid}".bold
