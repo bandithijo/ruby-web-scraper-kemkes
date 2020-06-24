@@ -14,7 +14,14 @@ end
 
 ActiveRecord::Base.establish_connection(db_configuration['development'])
 
-def scraper
+def rake_run(task)
+  rake = Rake.application
+  rake.init
+  rake.load_rakefile
+  rake[task].invoke
+end
+
+def run_scraping
   begin
     target_url     = "https://kemkes.go.id/"
     unparsed_page  = HTTParty.get(target_url)
@@ -42,15 +49,13 @@ def scraper
   )
 
   if CovidKemkesPasien.all.size == 0
-    puts "PERHATIAN: Database Kosong.".bold.black.bg_brown
-    puts "Program akan menjalankan proses seeding.".bold.reverse_color
-    rake = Rake.application
-    rake.init
-    rake.load_rakefile
-    rake["db:seed"].invoke
-    puts "Seeding berhasil.".bold.black.bg_green
+    puts " PERHATIAN: Database Kosong ".bold.black.bg_brown
+    puts " Program akan menjalankan proses seeding... ".bold.reverse_color
     sleep 3
-    system "clear"
+    rake_run("db:seed")
+    puts " SEEDING BERHASIL! ".bold.black.bg_green
+    sleep 3
+    puts ""
   end
 
   data_local_last          = CovidKemkesPasien.all.last
@@ -69,9 +74,9 @@ def scraper
 
   if data_input.valid?
     if (data_input.fetched_at != data_local_last.fetched_at) &&
-           (data_input.positif_covid != data_local_last.positif_covid)
+       (data_input.positif_covid != data_local_last.positif_covid)
       data_input.save
-      puts "INFO: DATA TERBARU BERHASIL DIINPUTKAN KE DALAM DATABASE!".bold.black.bg_brown
+      puts " INFO: DATA TERBARU BERHASIL DIINPUTKAN KE DALAM DATABASE! ".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold
       puts "Total Pasien Positif (LOCAL) : " + "#{data_local_last.positif_covid}".bold
       puts "PERKEMBANGAN DATA HARI INI & KEMARIN".bold
@@ -95,7 +100,7 @@ def scraper
         f.close
       end
     else
-      puts "INFO: BELUM ADA DATA BARU UNTUK HARI INI!".bold.black.bg_brown
+      puts " INFO: BELUM ADA DATA BARU UNTUK HARI INI! ".bold.black.bg_brown
       puts "Total Pasien Positif (REMOTE): " + "#{data_input.positif_covid}".bold \
                                              + " (#{data_input.fetched_at})"
       puts "Total Pasien Positif (LOCAL) : " + "#{data_local_last.positif_covid}".bold \
@@ -108,9 +113,29 @@ def scraper
       puts "Total PDP                    : " + "#{data_old_jumlah_pdp}".bold
     end
   else
-    puts "INFO: Data tidak valid!".bold.black.bg_red
+    puts "\r INFO: Data tidak valid! ".bold.black.bg_red
     puts data_input.errors.messages
   end
 end
 
-scraper
+begin
+  run_scraping
+rescue ActiveRecord::NoDatabaseError
+  puts " WARNING: BELUM CREATE DATABASE ".bold.black.bg_brown
+  puts " CREATE DATABASE: 'web_scraper_development' \n".bold.reverse_color
+  rake_run("db:create")
+  puts " DATABASE CREATED \n".bold.black.bg_green
+  puts " WARNING: BELUM CREATE SCHEME ".bold.black.bg_brown
+  puts " RUN MIGRATION: 'covid_kemkes_pasien' \n".bold.reverse_color
+  rake_run("db:migrate")
+  puts " MIGRATION MIGRATED \n".bold.black.bg_green
+  sleep 5
+  run_scraping
+rescue ActiveRecord::StatementInvalid
+  puts " WARNING: BELUM CREATE SCHEME ".bold.black.bg_brown
+  puts " RUN MIGRATION: 'covid_kemkes_pasien' \n".bold.reverse_color
+  sleep 3
+  rake_run("db:migrate")
+  puts " MIGRATION MIGRATED \n".bold.black.bg_green
+  run_scraping
+end

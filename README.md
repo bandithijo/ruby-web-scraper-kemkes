@@ -14,13 +14,6 @@ Ruby script untuk melakukan pencatatan data perhari berkenaan tentang "**Situasi
 | 6 | [**Standalone_Migrations**](https://rubygems.org/gems/standalone_migrations) | `6.0.0` |
 | 7 | [**pg**](https://rubygems.org/gems/pg) | `1.2.3` |
 
-## Inisialisasi Awal
-
-```shell
-$ rake db:create
-$ rake db:migrate
-```
-
 ## Menjalankan Script
 
 ```shell
