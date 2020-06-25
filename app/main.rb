@@ -138,4 +138,7 @@ rescue ActiveRecord::StatementInvalid
   rake_run("db:migrate")
   puts " MIGRATION MIGRATED \n".bold.black.bg_green
   run_scraping
+rescue PG::ConnectionBad
+  puts " WARNING: POSTGRESQL SERVICE BELUM ACTIVE & RUNNING ".bold.black.bg_brown
+  puts " Silahkan menjalankan PostgreSQL service terlebih dahulu \n".bold.reverse_color
 end
