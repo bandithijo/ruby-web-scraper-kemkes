@@ -1,3 +1,10 @@
+# --- APAKAH DATA INI DAPAT DIPERCAYA?
+# --- REFERENSI:
+# --- 1. Kami Bertanya kepada Epidemiolog: Apakah Data COVID-19 Pemerintah Bisa
+# ------ Dipercaya? | Buka Mata | https://youtu.be/GuJtjE1wHXA
+# --- 2. Surveilans Covid-19 dan Penyelidikan Epidemiologi Covid-19
+# ------ https://youtu.be/erP1klFq9MQ
+
 require_relative '../app/models/covid_kemkes_pasien'
 
 data = CovidKemkesPasien.create(
