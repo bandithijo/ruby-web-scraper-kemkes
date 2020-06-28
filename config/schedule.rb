@@ -22,5 +22,5 @@
 ENV.each { |k, v| env(k, v) }
 set :output, 'log/rake.log'
 every 1.day, at: '5.00 pm' do
-  command "cd /home/bandithijo/doc/Belajar/belajar-ruby/ruby-web-scraper-kemkes; rake run; rake git:seed:commit"
+  command "cd /home/bandithijo/doc/Belajar/belajar-ruby/ruby-web-scraper-kemkes; rake run; rake db:seed:commit"
 end
