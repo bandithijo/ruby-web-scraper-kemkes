@@ -6,7 +6,7 @@ task :run do
 end
 
 desc "Run git add & commit the db/seeds"
-namespace :git do
+namespace :db do
   namespace :seed do
     task :commit do
       system """
