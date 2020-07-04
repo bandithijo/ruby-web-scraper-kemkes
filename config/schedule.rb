@@ -20,7 +20,10 @@
 # Learn more: http://github.com/javan/whenever
 
 ENV.each { |k, v| env(k, v) }
+set :environment, "development"
 set :output, 'log/rake.log'
+
+project_dir = `echo $PWD`.strip
 every 1.day, at: ['5.00 pm'] do
-  command "cd /home/bandithijo/doc/Belajar/belajar-ruby/ruby-web-scraper-kemkes; rake run; rake db:seed:commit"
+  command "cd #{project_dir}; rake run; rake db:seed:commit; git push -u origin master"
 end
