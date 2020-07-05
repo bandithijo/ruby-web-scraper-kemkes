@@ -25,5 +25,8 @@ set :output, 'log/rake.log'
 
 project_dir = `echo $PWD`.strip
 every 1.day, at: ['5.00 pm'] do
-  command "cd #{project_dir}; rake run; rake db:seed:commit; git push -u origin master"
+  command "cd #{project_dir}; \
+           rake run; \
+           rake db:seed:commit; \
+           git push -u origin master"
 end
