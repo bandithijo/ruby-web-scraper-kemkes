@@ -21,6 +21,12 @@ Ruby script untuk melakukan pencatatan data perhari berkenaan tentang "**Situasi
 $ rake run
 ```
 
+## Menjalankan Commit untuk Seed
+
+```shell
+$ rake db:seed:commit
+```
+
 ## Mereset Data Tabel
 
 ```shell
