@@ -2567,3 +2567,13 @@ data = CovidKemkesPasien.create(
   fetched_at:      '2020-11-11'
 )
 puts "Insert data => #{data.fetched_at}"
+
+data = CovidKemkesPasien.create(
+  positif_covid:   452291,
+  sembuh_covid:    382084,
+  meninggal_covid: 14933,
+  jumlah_odp:      56868,
+  jumlah_pdp:      42165,
+  fetched_at:      '2020-11-12'
+)
+puts "Insert data => #{data.fetched_at}"
