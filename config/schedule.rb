@@ -24,7 +24,7 @@ set :environment, "development"
 set :output, 'log/rake.log'
 
 project_dir = `echo $PWD`.strip
-every 1.day, at: ['5.00 pm', '6:00 pm', '10:00 pm'] do
+every 1.day, at: ['5:00 pm', '5:30 pm', '6:00 pm', '6:30 pm', '10:00 pm'] do
   command "cd #{project_dir}; \
            rake run; \
            rake db:seed:commit"
