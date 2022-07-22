@@ -70,7 +70,7 @@ GEM
       rake (>= 10.0)
     thor (1.0.1)
     thread_safe (0.3.6)
-    tzinfo (1.2.9)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     whenever (1.0.0)
       chronic (>= 0.6.3)
